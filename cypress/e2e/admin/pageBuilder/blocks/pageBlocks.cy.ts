@@ -8,16 +8,15 @@ context("Page Builder - Blocks", () => {
 
     beforeEach(() => cy.login());
     beforeEach(() => cy.pbDeleteBlocks());
-    beforeEach(() => cy.pbAllDeleteBlockCategories()); 
+    beforeEach(() => cy.pbAllDeleteBlockCategories());
 
     it("Should be able to create a block category and a block and then edit, duplicate and delete it", () => {
-
         //Navigates to page, checks for proper loading and then clicks create new category button
         cy.visit("/page-builder/page-blocks");
         cy.findByPlaceholderText("Search blocks").should("exist");
         cy.findByTestId("pb-blocks-list-new-block-btn").click();
         cy.findByTestId("pb-blocks-list-new-block-category-btn").click();
-        
+
         //Fills in block category data and saves it
         cy.findByRole("textbox", { name: "Name" }).type(blockCategoryName);
         cy.findByRole("textbox", { name: "Slug" }).type(slugName);
@@ -27,10 +26,10 @@ context("Page Builder - Blocks", () => {
         //Check is category search bar works as expected
         cy.visit("/page-builder/block-categories");
         cy.findByPlaceholderText("Search block categories").should("exist").type(blockCategoryName);
-        cy.findByTestId('default-data-list').as('ulElement');
+        cy.findByTestId("default-data-list").as("ulElement");
         //If there is no element in the list after the search keyword is entered, the test will fail
-        cy.get('@ulElement').find('li').should('exist'); 
-        
+        cy.get("@ulElement").find("li").should("exist");
+
         //Creates new block for created class and checks if block edit page loads
         cy.visit("/page-builder/page-blocks");
         cy.findByPlaceholderText("Search blocks").should("exist");
@@ -38,10 +37,10 @@ context("Page Builder - Blocks", () => {
         cy.findByText(slugName).click();
         cy.findByTestId("pb-blocks-editor-save-changes-btn").click();
         cy.findByTestId("pb-blocks-list-new-block-btn").should("exist");
-        
+
         //Checks if deleting non-empty block categories behaves properly
         cy.visit("/page-builder/block-categories");
-        cy.get('.css-dmcazx-dataListContent').trigger('mouseover');
+        cy.get(".css-dmcazx-dataListContent").trigger("mouseover");
 
         //Checks if editing block name works(NOT WORKING)
         cy.visit("/page-builder/page-blocks");
@@ -50,16 +49,16 @@ context("Page Builder - Blocks", () => {
         cy.findByTestId("pb-blocks-list-block-edit-btn").click();
         cy.findByTestId("pb-editor-page-title").should("exist");
         cy.findByTestId("pb-editor-page-title").click().type;
-        cy.get('.css-1bo8ypc-TitleInputWrapper input').clear().type("Newest block name");
+        cy.get(".css-1bo8ypc-TitleInputWrapper input").clear().type("Newest block name");
         cy.findByTestId("pb-blocks-editor-save-changes-btn").click();
         cy.findByTestId("pb-blocks-list-new-block-btn").should("exist");
-        
+
         //Check is blocks search bar works as expected
         cy.visit("/page-builder/page-blocks");
         cy.findByPlaceholderText("Search blocks").should("exist").type("Newest block name");
-        cy.findByTestId('default-data-list').as('ulElement');
+        cy.findByTestId("default-data-list").as("ulElement");
         //If there is no element in the list after the search keyword is entered, the test will fail
-        cy.get('@ulElement').find('li').should('exist'); 
+        cy.get("@ulElement").find("li").should("exist");
 
         //Checks if editing block categories works
         cy.visit("/page-builder/block-categories");
@@ -68,7 +67,7 @@ context("Page Builder - Blocks", () => {
         cy.findByRole("textbox", { name: "Description" }).type(blockCategoryName + "1");
         cy.findByTestId("pb-block-categories-form-save-block-category-btn").click();
         cy.findByPlaceholderText("Search block categories", { timeout: 10000 }).should("exist");
-        
+
         //Check if export blocks from current category button functions properly
         cy.visit("/page-builder/page-blocks");
         cy.contains(blockCategoryName).click();

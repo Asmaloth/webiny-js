@@ -1,5 +1,5 @@
 import "cypress-wait-until";
-import './commands'
+import "./commands";
 import { addMatchImageSnapshotCommand } from "cypress-image-snapshot/command";
 import "./login";
 import "./dropFile";
